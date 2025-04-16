@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 from pymongo import MongoClient
 from datetime import datetime
+import os
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = os.environ.get('SECRET_KEY','default_secret_key')
 
-client = MongoClient("mongodb+srv://misky0310:Miskat0310@cluster0.hupf5dv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient(os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/'))
 db = client['rfid_db']
 collection = db['authorized_cards']
 
